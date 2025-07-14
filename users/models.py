@@ -1,14 +1,9 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-# 🎭 Custom user class: Handles EMPLOYER vs EMPLOYEE roles
-
-
+# 🧑 Custom user class with employer/employee roles and profile details
 class CustomUser(AbstractUser):
-    ROLE_CHOICES = [
-        ('EMPLOYER', 'Employer'),
-        ('EMPLOYEE', 'Employee'),
-    ]
+    ROLE_CHOICES = [('EMPLOYER', 'Employer'), ('EMPLOYEE', 'Employee')]
 
     role = models.CharField(max_length=20, choices=ROLE_CHOICES)
     phone_number = models.CharField(max_length=15)
@@ -20,18 +15,16 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return f"{self.username} - {self.role}"
 
-# Helper function to structure document paths by user ID
+# 📎 Storage path for user documents
 def user_document_path(instance, filename):
     return f"documents/user_{instance.user.id}/{filename}"
 
-# 📄 Model to handle file uploads for KRA, ID, Certifications
-
-
+# 📄 Document model to store uploaded files per user
 class Document(models.Model):
     DOC_TYPES = [
         ('ID', 'National ID'),
         ('KRA', 'KRA Certificate'),
-        ('CERT', 'Professional Certification'),
+        ('CERT', 'Certification'),
         ('CV', 'Curriculum Vitae'),
     ]
 

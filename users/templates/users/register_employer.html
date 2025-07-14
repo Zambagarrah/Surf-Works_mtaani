@@ -1,5 +1,13 @@
-<h2>Employer Registration</h2>
-<form method="POST">{% csrf_token %}
+<h2>Employer Registration Form</h2>
+<form method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
   {{ form.as_p }}
+
+  <h3>Upload Your Documents</h3>
+  {{ formset.management_form }}
+  {% for form in formset %}
+    {{ form.as_p }}
+  {% endfor %}
+
   <button type="submit">Register</button>
 </form>
